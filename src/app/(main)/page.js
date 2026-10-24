@@ -3,28 +3,17 @@ import FeaturedSection from "@/components/home/FeaturedSection";
 import HowPageTurn from "@/components/home/HowPageTurn";
 import NewArrival from "@/components/home/NewArrival";
 import ReaderReflection from "@/components/home/ReaderReflection";
+import LoadingSuspense from "@/components/shared/LoadingSuspense";
 import { Suspense } from "react";
 
 export default function Home() {
     return (
         <div>
-            <Suspense
-                fallback={
-                    <div className="flex justify-center items-center p-4">
-                        <span className="loading loading-spinner text-warning"></span>
-                    </div>
-                }
-            >
+            <Suspense fallback={<LoadingSuspense></LoadingSuspense>}>
                 <NewArrival></NewArrival>
             </Suspense>
             <Banner></Banner>
-            <Suspense
-                fallback={
-                    <div className="flex justify-center items-center p-4">
-                        <span className="loading loading-spinner text-warning"></span>
-                    </div>
-                }
-            >
+            <Suspense fallback={<LoadingSuspense></LoadingSuspense>}>
                 <FeaturedSection></FeaturedSection>
             </Suspense>
             <HowPageTurn></HowPageTurn>

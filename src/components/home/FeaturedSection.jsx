@@ -2,7 +2,7 @@ import { playFair } from "@/app/layout";
 import { getBooks } from "@/lib/data";
 import React from "react";
 import { FaDotCircle } from "react-icons/fa";
-import BooksCard from "./BooksCard";
+import BookCard from "../shared/BookCard";
 
 const FeaturedSection = async () => {
 
@@ -17,10 +17,10 @@ const FeaturedSection = async () => {
             <h2 className={`${playFair.className} font-bold text-3xl`}>Featured Books</h2>
             <p className="font-semibold mt-3 text-slate-700">Top borrowed books this week from our digital library collection. </p>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3 justify-between p-15 ">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3 justify-between p-5 ">
                 {
                     books.slice(0,4).map(book=>{
-                        return <BooksCard book={book} key={book.id}></BooksCard>
+                        return <BookCard book={book} key={book.id}></BookCard>
                     })
                 }
             </div>
