@@ -1,6 +1,6 @@
 import React from "react";
 import { IoLocationOutline, IoMailOutline, IoTimeOutline } from "react-icons/io5";
-import { FaCode, FaTelegramPlane, FaRegComments, FaShareAlt } from "react-icons/fa";
+import { FaCode, FaTelegramPlane, FaRegComments, FaShareAlt, FaFacebook, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
     return (
@@ -20,7 +20,7 @@ const Footer = () => {
 
                             <p className="flex items-start gap-3">
                                 <IoMailOutline className="mt-1 shrink-0 text-xl text-[#A85D13]" />
-                                <p className=" hover:text-black">curator@pageturn-library.org</p>
+                                <span className="hover:text-black">curator@pageturn-library.org</span>
                             </p>
 
                             <p className="flex items-start gap-3">
@@ -73,7 +73,7 @@ const Footer = () => {
                         </ul>
                     </div>
                     <div>
-                        <h3 className="mb-4 text-lg font-semibold text-[#292521]">THE GAZETTE</h3>
+                        <h3 className="mb-4 text-lg font-semibold text-[#292521]">CONTACT US</h3>
                         <p className="mb-4">Receive weekly dispatches on newly acquired first editions and curator essays.</p>
 
                         <form className="mb-5 flex gap-2">
@@ -81,17 +81,17 @@ const Footer = () => {
                             <button className="rounded-sm bg-black px-4 py-2 text-white hover:bg-[#38332F]">Join</button>
                         </form>
 
-                        <h4 className="mb-3 font-semibold">Scholarly Exchanges</h4>
+                        <h4 className="mb-3 font-semibold">Social Links</h4>
 
                         <div className="flex gap-3">
                             <p className="rounded-full bg-[#F5E8E2] p-3  hover:bg-[#EBD9D0]">
                                 <FaCode size={20} />
                             </p>
                             <p className="rounded-full bg-[#F5E8E2] p-3 hover:bg-[#EBD9D0]">
-                                <FaTelegramPlane size={20} />
+                                <FaFacebook size={20} />
                             </p>
                             <p className="rounded-full bg-[#F5E8E2] p-3 hover:bg-[#EBD9D0]">
-                                <FaRegComments size={20} />
+                                <FaTwitter size={20} />
                             </p>
                             <p className="rounded-full bg-[#F5E8E2] p-3 hover:bg-[#EBD9D0]">
                                 <FaShareAlt size={20} />
