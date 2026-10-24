@@ -2,6 +2,7 @@ import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
+import { Suspense } from "react";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
@@ -26,7 +27,9 @@ export default function RootLayout({ children }) {
       className={`${plusJakartaSans.className} h-full antialiased`}
     >
       <body className="bg-[#fff8f5] min-h-full flex flex-col">
-        <Navbar></Navbar>
+        <Suspense>
+          <Navbar></Navbar>
+        </Suspense>
         {children}
         <Footer></Footer>
         </body>
