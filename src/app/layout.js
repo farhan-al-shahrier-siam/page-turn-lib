@@ -29,8 +29,8 @@ export default function RootLayout({ children }) {
       <body className="bg-[#fff8f5] min-h-full flex flex-col">
         <Suspense>
           <Navbar></Navbar>
-          {children}
         </Suspense>
+          {children}
         <Footer></Footer>
         </body>
     </html>
