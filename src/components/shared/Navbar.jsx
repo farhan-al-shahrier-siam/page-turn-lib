@@ -1,15 +1,19 @@
-"use client"
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import logo from "@/assets/logo.png"
+import logo from "@/assets/logo.png";
 import { usePathname } from "next/navigation";
 import { TbUserHexagon } from "react-icons/tb";
+import { authClient } from "@/lib/auth-client";
 
 const Navbar = () => {
+    const pathName = usePathname();
 
-    const pathName = usePathname()
+    const { data: session } = authClient.useSession();
 
+    // console.log(session)
+    const user = session?.user;
 
     const links = (
         <>
@@ -29,7 +33,7 @@ const Navbar = () => {
                 </Link>
             </li>
         </>
-    )
+    );
 
     return (
         <div className="navbar bg-base-100 shadow-sm">
@@ -46,24 +50,27 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <Link href={"/"} className="cursor-pointer rounded-2xl bg-[#fff8f5]">
-                    <Image
-                        src={logo}
-                        alt="Logo"
-                        width={648}
-                        height={202}
-                        className=" text-xl rounded-2xl w-37.5 h-auto object-contain"
-                    ></Image>
+                    <Image src={logo} alt="Logo" width={648} height={202} className=" text-xl rounded-2xl w-37.5 h-auto object-contain"></Image>
                 </Link>
             </div>
             <div className="navbar-center hidden lg:flex bg-white">
-                <ul className="menu menu-horizontal px-1 bg-white">
-                    {links}
-                </ul>
+                <ul className="menu menu-horizontal px-1 bg-white">{links}</ul>
             </div>
-            <div className="navbar-end gap-2">
-                <TbUserHexagon className="text-3xl"></TbUserHexagon>
-                <Link className="bg-[#fff8f5] btn" href={"/login"}>Login</Link>
-            </div>
+            {user ? (
+                <div className="navbar-end gap-2">
+                    <Image src={user.image || <TbUserHexagon className="text-3xl"></TbUserHexagon>} alt={user.name} height={60} width={60}></Image>
+                    <button onClick={async () => await authClient.signOut()} className="bg-[#fff8f5] btn" href={"/login"}>
+                        Logout
+                    </button>
+                </div>
+            ) : (
+                <div className="navbar-end gap-2">
+                    <TbUserHexagon className="text-3xl"></TbUserHexagon>
+                    <Link className="bg-[#fff8f5] btn" href={"/login"}>
+                        Login
+                    </Link>
+                </div>
+            )}
         </div>
     );
 };

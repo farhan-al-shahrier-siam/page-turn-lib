@@ -1,12 +1,42 @@
 "use client"
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { FaGithub, FaLandmark } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { FiArrowRight, FiBookOpen, FiClock, FiEye, FiEyeOff, FiImage, FiLock, FiMail, FiShield, FiUser } from "react-icons/fi";
+import { toast, ToastContainer } from "react-toastify";
 
 const RegisterPage = () => {
+    const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
+
+    const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
+
+  const handleRegister = async (data) => {
+    const {name, email, password, photo} = data;
+    // console.log(name, email, password, photo)
+    const { data: res, error } = await authClient.signUp.email({
+            name: name,
+            email: email,
+            password: password,
+            image: photo,
+            callbackURL: "/login",
+        });
+        if(res){
+            toast.success("Sign-up successfull...")
+            // redirect("/login")
+            router.push("/login");
+        }else if(error){
+            toast.error(error.message)
+        }
+  }
 
     return (
         <div className="min-h-screen bg-[#fff5ee] px-4 py-7 flex flex-col items-center justify-center">
@@ -34,7 +64,7 @@ const RegisterPage = () => {
                     </div>
 
                     {/* Register Form */}
-                    <form className="space-y-4">
+                    <form onSubmit={handleSubmit(handleRegister)} className="space-y-4">
                         {/* Name */}
                         <div>
                             <label htmlFor="name" className="mb-1.5 block text-xs font-semibold">
@@ -44,7 +74,13 @@ const RegisterPage = () => {
                             <label className="input w-full input-bordered flex h-10.5 items-center gap-3 rounded-sm border-0 bg-[#f5ebe5] px-3 focus-within:outline-1 focus-within:outline-amber-700">
                                 <FiUser className="text-gray-500" size={17} />
 
-                                <input type="text" placeholder="Enter your full name" className="min-w-0 grow text-sm" />
+                                <input                              
+                                    {...register("name", { required: "Name is required" })}
+                                    type="text" 
+                                    placeholder="Enter your full name" 
+                                    className="min-w-0 grow text-sm" 
+                                />
+                                {errors.name && <p className="text-red-500">{errors.name.message}</p>}
                             </label>
                         </div>
 
@@ -57,7 +93,12 @@ const RegisterPage = () => {
                             <label className="input w-full input-bordered flex h-10.5 items-center gap-3 rounded-sm border-0 bg-[#f5ebe5] px-3 focus-within:outline-1 focus-within:outline-amber-700">
                                 <FiMail className="text-gray-500" size={17} />
 
-                                <input type="email" placeholder="you@example.com" className="min-w-0 grow text-sm" />
+                                <input 
+                                    {...register("email", { required: "Email is required" })}
+                                    type="email" 
+                                    placeholder="you@example.com" 
+                                    className="min-w-0 grow text-sm" />
+                                    {errors.email && <p className="text-red-500">{errors.email.message}</p>}
                             </label>
                         </div>
 
@@ -70,7 +111,12 @@ const RegisterPage = () => {
                             <label className="input w-full input-bordered flex h-10.5 items-center gap-3 rounded-sm border-0 bg-[#f5ebe5] px-3 focus-within:outline-1 focus-within:outline-amber-700">
                                 <FiLock className="text-gray-500" size={17} />
 
-                                <input type={showPassword ? "text" : "password"} placeholder="Create a password" className="min-w-0 grow text-sm" />
+                                <input 
+                                {...register("password", { required: "Password is required" })}
+                                type={showPassword ? "text" : "password"} 
+                                placeholder="Create a password" 
+                                className="min-w-0 grow text-sm" />
+                                {errors.password && <p className="text-red-500">{errors.password.message}</p>}
 
                                 <button type="button" onClick={() => setShowPassword(!showPassword)} className="text-gray-500" aria-label={showPassword ? "Hide password" : "Show password"}>
                                     {showPassword ? <FiEyeOff size={17} /> : <FiEye size={17} />}
@@ -82,13 +128,17 @@ const RegisterPage = () => {
                         <div>
                             <label htmlFor="photo" className="mb-1.5 block text-xs font-semibold">
                                 Profile Photo URL
-                                <span className="ml-1 font-normal text-gray-400">(Optional)</span>
                             </label>
 
                             <label className="input w-full input-bordered flex h-10.5 items-center gap-3 rounded-sm border-0 bg-[#f5ebe5] px-3 focus-within:outline-1 focus-within:outline-amber-700">
                                 <FiImage className="text-gray-500" size={17} />
 
-                                <input type="text" placeholder="https://example.com/photo.jpg" className="min-w-0 grow text-sm" />
+                                <input 
+                                {...register("photo", { required: "Photo URL is required" })}
+                                type="text" 
+                                placeholder="https://example.com/photo.jpg" 
+                                className="min-w-0 grow text-sm" />
+                                {errors.photo && <p className="text-red-500">{errors.photo.message}</p>}
                             </label>
                         </div>
                         {/* Create Account */}
@@ -149,6 +199,7 @@ const RegisterPage = () => {
                     Open to all deliberate readers
                 </span>
             </div>
+            <ToastContainer></ToastContainer>
         </div>
     );
 };

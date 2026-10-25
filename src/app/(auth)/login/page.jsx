@@ -1,12 +1,39 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { FiArrowRight, FiBookOpen, FiClock, FiExternalLink, FiEye, FiEyeOff, FiLock, FiMail, FiShield } from "react-icons/fi";
+import { toast, ToastContainer } from "react-toastify";
 
 const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+
+    const handleLogin = async (data) => {
+        const { email, password } = data;
+        // console.log(email, password)
+        const { data: res, error } = await authClient.signIn.email({
+            email: email,
+            password: password,
+            rememberMe: true,
+            callbackURL: "/",
+        });
+
+        if (res) {
+            toast.success("Sign-in successfull...");
+            // redirect("/login")
+        } else if (error) {
+            toast.error(error.message);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-[#fff5ee] px-4 py-7 flex flex-col items-center justify-center">
@@ -34,17 +61,16 @@ const LoginPage = () => {
                     </div>
 
                     {/* Login Form */}
-                    <form className="space-y-5">
+                    <form onSubmit={handleSubmit(handleLogin)} className="space-y-5">
                         <div>
                             <div className="mb-1.5 flex items-center justify-between gap-2 text-xs">
-                                <label className="font-semibold">
-                                    Email Address
-                                </label>
+                                <label className="font-semibold">Email Address</label>
                             </div>
 
                             <label className="w-full input input-bordered flex h-10.5 items-center gap-3 rounded-sm border-0 bg-[#f5ebe5] px-3 focus-within:outline-amber-700">
                                 <FiMail className="text-gray-500" size={17} />
-                                <input type="email" placeholder="Enter email address" className="text-sm" />
+                                <input {...register("email", { required: "Email is required" })} type="email" placeholder="Enter email address" className="text-sm" />
+                                {errors.email && <p className="text-red-500">{errors.email.message}</p>}
                             </label>
                         </div>
 
@@ -58,7 +84,13 @@ const LoginPage = () => {
                             <label className="input w-full input-bordered flex h-10.5 items-center gap-3 rounded-sm border-0 bg-[#f5ebe5] px-3 focus-within:outline-1 focus-within:outline-amber-700">
                                 <FiLock className="text-gray-500" size={17} />
 
-                                <input type={showPassword ? "text" : "password"} placeholder="Enter your password" className="min-w-0 grow text-sm"/>
+                                <input
+                                    {...register("password", { required: "Password is required" })}
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="Enter your password"
+                                    className="min-w-0 grow text-sm"
+                                />
+                                {errors.password && <p className="text-red-500">{errors.password.message}</p>}
 
                                 <button type="button" onClick={() => setShowPassword(!showPassword)} className="text-gray-500" aria-label={showPassword ? "Hide password" : "Show password"}>
                                     {showPassword ? <FiEyeOff size={17} /> : <FiEye size={17} />}
@@ -67,7 +99,7 @@ const LoginPage = () => {
                         </div>
 
                         {/* Sign In */}
-                        <button type="submit" className="btn h-10.5 min-h-0 w-full rounded-sm border-0 bg-[#141c30] text-sm font-medium text-white hover:bg-[#222d46]">
+                        <button className="btn h-10.5 min-h-0 w-full rounded-sm border-0 bg-[#141c30] text-sm font-medium text-white hover:bg-[#222d46]">
                             Sign In to Library
                             <FiArrowRight size={17} />
                         </button>
@@ -125,6 +157,7 @@ const LoginPage = () => {
                     Open to all deliberate readers
                 </span>
             </div>
+            <ToastContainer></ToastContainer>
         </div>
     );
 };
