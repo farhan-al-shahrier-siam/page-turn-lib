@@ -58,6 +58,7 @@ const Navbar = () => {
             </div>
             {user ? (
                 <div className="navbar-end gap-2">
+                    <h2>Welcome, {user.name}</h2>
                     <Image src={user.image || <TbUserHexagon className="text-3xl"></TbUserHexagon>} alt={user.name} height={60} width={60}></Image>
                     <button onClick={async () => await authClient.signOut()} className="bg-[#fff8f5] btn" href={"/login"}>
                         Logout

@@ -25,7 +25,7 @@ const Header = () => {
                     <input
                         {...register("search")}
                         type="text"
-                        placeholder="Search books by title, author, or keywords... (e.g. 'Clean Code', 'Science')"
+                        placeholder="Search books by title"
                         className="w-full bg-transparent text-stone-700 placeholder-stone-400 focus:outline-none text-sm md:text-base"
                     />
 
