@@ -4,6 +4,7 @@ import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import { Suspense } from "react";
 import { ToastContainer } from "react-toastify";
+import 'animate.css';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
     variable: "--font-plus-jakarta-sans",

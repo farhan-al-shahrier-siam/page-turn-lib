@@ -16,7 +16,7 @@ const AllBooksPage = async () => {
         <div className="mx-auto container ">
             <div className="space-y-2 p-4">
                 <p className="text-xs pt-5 text-amber-600 font-semibold">CURATED ARCHIVE FOLIO</p>
-                <h2 className={`${playFair.className} font-bold text-4xl`}>Library Catalog</h2>
+                <h2 className={`${playFair.className} font-bold text-4xl animate__animated animate__fadeInLeft`}>Library Catalog</h2>
             </div>
             <Header></Header>
 

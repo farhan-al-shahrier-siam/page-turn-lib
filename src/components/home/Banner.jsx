@@ -10,7 +10,7 @@ const Banner = () => {
         <div className="p-10 md:flex md:justify-between">
             <div className="flex items-center">
                 <div className={`max-w-2xl space-y-7`}>
-                    <h2 className={`${playFair.className} font-bold text-5xl`}>
+                    <h2 className={`${playFair.className} font-bold text-5xl animate__animated animate__rubberBand`}>
                         Find Your Next Read,<br></br> <span className="text-amber-700 ">Borrow Instantly.</span>
                     </h2>
                     <p className="font-semibold text-slate-700">

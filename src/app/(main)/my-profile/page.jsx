@@ -60,7 +60,7 @@ const MyProfile = () => {
 
                     {/* Heading */}
                     <div className="mb-8 text-center">
-                        <h1 className="font-serif text-3xl font-bold text-[#25211e] sm:text-4xl">My Profile</h1>
+                        <h1 className="font-serif text-3xl font-bold text-[#25211e] sm:text-4xl animate__animated animate__zoomInDown">My Profile</h1>
                         <p className="mt-3 text-sm text-gray-600">Manage your personal library information.</p>
                     </div>
 
